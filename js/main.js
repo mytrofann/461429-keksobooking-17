@@ -13,12 +13,14 @@ var NUMBER_ADS = {
   start: 1,
   end: 8
 };
+var PIN_WIDTH = 50;
 
 var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
 var mapPins = document.querySelector('.map__pins');
+
 var getCoords = function (elem) {
   var box = elem.getBoundingClientRect();
 
@@ -26,6 +28,7 @@ var getCoords = function (elem) {
     width: box.width
   };
 }
+
 var locationX = {
   start: 0,
   end: getCoords(mapPins)
@@ -42,7 +45,7 @@ var similarAds = function (start, end) {
         type: offer[getRandomInt(start, end)]
       },
       location: {
-        x: getRandomInt(locationX.start, locationX.end.width),
+        x: getRandomInt(locationX.start, locationX.end.width - PIN_WIDTH),
         y: getRandomInt(locationY.start, locationY.end)
       }
     };
