@@ -5,10 +5,6 @@ var authorAvatar = {
   extension: '.png'
 };
 var offer = ['palace', 'flat', 'house', 'bungalo'];
-var locationX = {
-  start: 0,
-  end: 1200
-};
 var locationY = {
   start: 130,
   end: 630
@@ -27,9 +23,13 @@ var getCoords = function (elem) {
   var box = elem.getBoundingClientRect();
 
   return {
-    left: box.left + pageXOffset
+    width: box.width
   };
 }
+var locationX = {
+  start: 0,
+  end: getCoords(mapPins)
+};
 
 var similarAds = function (start, end) {
   var ads = [];
@@ -42,7 +42,7 @@ var similarAds = function (start, end) {
         type: offer[getRandomInt(start, end)]
       },
       location: {
-        x: getRandomInt(locationX.start, locationX.end),
+        x: getRandomInt(locationX.start, locationX.end.width),
         y: getRandomInt(locationY.start, locationY.end)
       }
     };
