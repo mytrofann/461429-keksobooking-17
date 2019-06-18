@@ -5,7 +5,10 @@ var authorAvatar = {
   extension: '.png'
 };
 var offer = ['palace', 'flat', 'house', 'bungalo'];
-var locationX = 1;
+var locationX = {
+  start: 0,
+  end: 1200
+};
 var locationY = {
   start: 130,
   end: 630
@@ -19,6 +22,15 @@ var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
+var mapPins = document.querySelector('.map__pins');
+var getCoords = function (elem) {
+  var box = elem.getBoundingClientRect();
+
+  return {
+    left: box.left + pageXOffset
+  };
+}
+
 var similarAds = function (start, end) {
   var ads = [];
   for (var i = 0; i < end; i++) {
@@ -30,10 +42,10 @@ var similarAds = function (start, end) {
         type: offer[getRandomInt(start, end)]
       },
       location: {
-        x: locationX,
+        x: getRandomInt(locationX.start, locationX.end),
         y: getRandomInt(locationY.start, locationY.end)
       }
-    }
+    };
   }
   return ads;
 };
@@ -46,8 +58,8 @@ var adTemplate = document.querySelector('#pin').content.querySelector('.map__pin
 
 var renderAds = function (ad) {
   var adElement = adTemplate.cloneNode(true);
-  adElement.querySelector('.map__pin').style.left = ad.location.x + px;
-  adElement.querySelector('.map__pin').style.top = ad.location.y + px;
+  adElement.style.left = ad.location.x + 'px';
+  adElement.style.top = ad.location.y + 'px';
   adElement.querySelector('img').src = ad.author.avatar;
   adElement.querySelector('img').alt = ad.offer.type;
   return adElement;
